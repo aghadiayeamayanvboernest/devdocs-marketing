@@ -24,6 +24,7 @@ model User {
 
   usage         Usage[]
   subscription  Subscription?
+  conversations Conversation[]
 
   @@index([clerkId])
   @@index([email])
@@ -63,4 +64,30 @@ enum Plan {
   FREE
   PRO
   ENTERPRISE
+}
+
+// Chat History Models (used by chatbot)
+model Conversation {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String?   // Auto-generated from first message
+  mode      String    @default("documentation") // documentation or code
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  messages  Message[]
+
+  @@index([userId])
+  @@index([updatedAt])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  role           String       // user or assistant
+  content        String       @db.Text
+  createdAt      DateTime     @default(now())
+
+  @@index([conversationId])
 }
