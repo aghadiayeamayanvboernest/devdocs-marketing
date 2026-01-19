@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 const navigation = [
   { name: "Home", href: "/" },
-  { name: "Features", href: "/features", openInNewTab: true },
+  { name: "Features", href: "/features" },
   { name: "Pricing", href: "/pricing" },
   { name: "About", href: "/about" },
   { name: "Docs", href: "/docs" },
@@ -35,8 +35,6 @@ export function Header() {
             <Link
               key={item.name}
               href={item.href}
-              target={item.openInNewTab ? "_blank" : undefined}
-              rel={item.openInNewTab ? "noopener noreferrer" : undefined}
               className={cn(
                 "text-sm font-semibold leading-6 transition-colors",
                 pathname === item.href
@@ -52,12 +50,12 @@ export function Header() {
         {/* Auth Buttons */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
           <SignedOut>
-            <Link href="/sign-in" target="_blank" rel="noopener noreferrer">
+            <Link href="/sign-in">
               <Button variant="ghost" size="sm">
                 Sign in
               </Button>
             </Link>
-            <Link href="/sign-up" target="_blank" rel="noopener noreferrer">
+            <Link href="/sign-up">
               <Button size="sm">Get Started</Button>
             </Link>
           </SignedOut>
